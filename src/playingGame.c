@@ -1,7 +1,5 @@
 #include "header.h"
 #include "utils.h"
-#include <stdio.h>
-
 
 void playing_game(char **tabuleiro,pjogadas pdados){ 
     while(checkWinner() == false){
@@ -24,35 +22,42 @@ bool checkTurnos(pjogadas pdados){
     return true;
 }
 
-bool checkWinner(){
-    return false;
-}
+
 
 void pedeJogada(char **tabuleiro,pjogadas pdados){
+    coordenadas coordenadas;
+    pcoordenadas pcoordenadas = &coordenadas;
     size_t size = 1;
     pdados->input_jogadas = (char*)malloc(size);
     int bytes_size = 0;
+
     printf("Introduza linha e coluna (ex:1 1,2 3):");
     bytes_size = getline(&pdados->input_jogadas, &size, stdin);
-    while (possiblePlay(tabuleiro,pdados,bytes_size) == false){
+    while (possiblePlay(tabuleiro,pdados,bytes_size,pcoordenadas) == false){
         printf("Introduza novamente uma linha e coluna (ex:1 1,2 3):");
         bytes_size = getline(&pdados->input_jogadas, &size, stdin);
+        //printf("%s",pdados->input_jogadas);
     };
     mostraMat(tabuleiro,9,9);
+    arrayWinner(tabuleiro,pdados,pcoordenadas);
+    nextquadro(pdados);
 }
 
-bool possiblePlay(char **tabuleiro,pjogadas pdados,int bytes_size){ 
+bool possiblePlay(char **tabuleiro,pjogadas pdados,int bytes_size,pcoordenadas pcoordenadas){ 
     //printf("|%d|",bytes_size);
+    
     if(bytes_size > 4)
         return false;
-    if(atoi(&pdados->input_jogadas[1]) == 0 && atoi(&pdados->input_jogadas[3]) == 0) 
+    if(atoi(&pdados->input_jogadas[0]) == 0 && atoi(&pdados->input_jogadas[2]) == 0) 
+        return false;
+    if(pdados->input_jogadas[1] != ' ')
         return false;
     sscanf(pdados->input_jogadas,"%d %d",&pdados->x,&pdados->y);
     if(pdados->x != 1 && pdados->x != 2 && pdados->x != 3)
         return false;
     if(pdados->y != 1 && pdados->y != 2 && pdados->y != 3)
         return false;
-    return converter_coordenadas(tabuleiro,pdados);
+    return converter_coordenadas(tabuleiro,pdados,pcoordenadas);
     printf("|%d| |%d|",pdados->x,pdados->y);
 }
 

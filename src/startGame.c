@@ -10,7 +10,13 @@ void start_Game(){
     char **tabuleirojogo;
     bool first_interation = true;
     char pos;
+    for (int i = 0; i < 8; i++){
+        pdados->winnerArray[i] = '_';
+        printf("!%c!",pdados->winnerArray[i]);
+    }
+    
     pdados->mini_tabuleiro = intUniformRnd(1,9);
+    
     
     regrasDoJogo();
 
