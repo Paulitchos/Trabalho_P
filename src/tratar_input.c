@@ -32,9 +32,12 @@ char getPos(char **p, int x, int y){
 
 void nextquadro(pjogadas pdados){
     pdados->mini_tabuleiro = ((pdados->x- 1) * 3) + (pdados ->y - 1) + 1;
-    
+    //printf("|%c|",pdados->winnerArray[8]);
     if(pdados->winnerArray[pdados->mini_tabuleiro - 1] != '_'){
-        printf("!%d!",pdados->mini_tabuleiro);
-        printf("!%c!",pdados->winnerArray[pdados->mini_tabuleiro - 1]);
+        //printf("!%d!",pdados->mini_tabuleiro);
+        //printf("!%c!",pdados->winnerArray[pdados->mini_tabuleiro - 1]);
+        while(pdados->winnerArray[pdados->mini_tabuleiro - 1] != '_'){
+            pdados->mini_tabuleiro = intUniformRnd(1,9);
+        }
     }
 }

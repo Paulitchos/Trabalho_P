@@ -10,10 +10,12 @@ void start_Game(){
     char **tabuleirojogo;
     bool first_interation = true;
     char pos;
-    for (int i = 0; i < 8; i++){
+    for (int i = 0; i < 9; i++){
         pdados->winnerArray[i] = '_';
-        printf("!%c!",pdados->winnerArray[i]);
+        //printf("!%c!",pdados->winnerArray[i]);
     }
+    pdados->winnerArray[9] ='\0';
+    //printf("|%lu|",sizeof(pdados->winnerArray));
     
     pdados->mini_tabuleiro = intUniformRnd(1,9);
     

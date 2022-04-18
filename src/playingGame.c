@@ -2,7 +2,7 @@
 #include "utils.h"
 
 void playing_game(char **tabuleiro,pjogadas pdados){ 
-    while(checkWinner() == false){
+    while(checkWinner(pdados) == false){
         bool jogador = checkTurnos(pdados);
         if (jogador == true){
             printf("\nJogador 1 a jogar || Simbolo X ||Turno:%d\n",pdados->turnos);       
@@ -11,8 +11,16 @@ void playing_game(char **tabuleiro,pjogadas pdados){
             printf("\nJogador 2 a jogar || Simbolo O || Turno:%d\n",pdados->turnos);
         }
         printf("Mini_tabuleiro %d\n",pdados->mini_tabuleiro);
-        pedeJogada(tabuleiro,pdados);
+        antesdeJogada(tabuleiro,pdados);
+        
         pdados->turnos++;
+    }
+    bool winner = checkTurnos(pdados);
+    if (winner == true){
+        printf("\nJogador 1 a jogar || Simbolo X ||Turno:%d\n",pdados->turnos);       
+    }
+    else{
+        printf("\nJogador 2 a jogar || Simbolo O || Turno:%d\n",pdados->turnos);
     }
 }
 
@@ -22,7 +30,38 @@ bool checkTurnos(pjogadas pdados){
     return true;
 }
 
+void antesdeJogada(char** tabuleiro,pjogadas pdados){
+    size_t size = 2;
+    char *string;
+    bool first_interation = true;
 
+    printf("1- Fazer Jogada\n"); 
+    printf("2- Rever K jogadas anteriores(K < 10)\n");
+    printf("3- Sair do Jogo\n"); 
+
+    printf("Introduza o numero da opcao:");
+    string = (char*)malloc(size);
+    while(strcmp(string,"1\n") != 0 && strcmp(string,"2\n") !=0){
+        if (first_interation == false){
+            printf("Tem que inserir pelo menos um numero: ");
+        }
+        getline(&string, &size, stdin);
+        
+        first_interation = false;
+        
+    }
+    if(strcmp(string,"1\n") == 0){
+        free(string);
+        pedeJogada(tabuleiro,pdados);
+        
+    }
+    else if(strcmp(string,"2\n") == 0){
+        free(string);
+    }
+    else if(strcmp(string,"3\n") == 0){
+        free(string);
+    }
+}
 
 void pedeJogada(char **tabuleiro,pjogadas pdados){
     coordenadas coordenadas;
@@ -31,7 +70,7 @@ void pedeJogada(char **tabuleiro,pjogadas pdados){
     pdados->input_jogadas = (char*)malloc(size);
     int bytes_size = 0;
 
-    printf("Introduza linha e coluna (ex:1 1,2 3):");
+    printf("\nIntroduza linha e coluna (ex:1 1,2 3):");
     bytes_size = getline(&pdados->input_jogadas, &size, stdin);
     while (possiblePlay(tabuleiro,pdados,bytes_size,pcoordenadas) == false){
         printf("Introduza novamente uma linha e coluna (ex:1 1,2 3):");

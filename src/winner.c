@@ -1,7 +1,35 @@
 #include "header.h"
 #include "utils.h"
 
-bool checkWinner(){
+bool checkWinner(pjogadas pdados){
+
+    //Check linhas
+    for(int i = 0;i <9;i+=3){
+        if(pdados->winnerArray[i] == pdados->winnerArray[i+1] 
+        && pdados->winnerArray[i] == pdados->winnerArray[i+2] 
+        && pdados->winnerArray[i] != '_')
+            return true;
+    }
+
+    //Check colunas
+    for(int i = 0;i <3;i++){
+        if(pdados->winnerArray[i] == pdados->winnerArray[i+3] 
+        && pdados->winnerArray[i] == pdados->winnerArray[i+6] 
+        && pdados->winnerArray[i] != '_')
+            return true;
+    }
+    //Check diagonais
+
+    if(pdados->winnerArray[0] == pdados->winnerArray[4] 
+    && pdados->winnerArray[0] == pdados->winnerArray[8] 
+    && pdados->winnerArray[0] != '_')
+        return true;
+
+    if(pdados->winnerArray[2] == pdados->winnerArray[4] 
+    && pdados->winnerArray[2] == pdados->winnerArray[6] 
+    && pdados->winnerArray[2] != '_')
+        return true;
+
     return false;
 }
 

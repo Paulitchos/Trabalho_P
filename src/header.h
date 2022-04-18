@@ -15,7 +15,7 @@ struct dados_jogada
     char *input_jogadas;
     int x;
     int y;
-    char winnerArray[8];
+    char winnerArray[10];
     pjogadas prox;
 };
 
@@ -62,7 +62,7 @@ void playing_game(char **tabuleiro,pjogadas pdados);
 //Diz qual o jogador a jogar
 bool checkTurnos(pjogadas pdados);
 
-bool checkWinner();
+bool checkWinner(pjogadas pdados);
 
 char check_minitabuleiro(char** tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas);
 
@@ -73,4 +73,6 @@ void arrayWinner(char**tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas);
 bool possiblePlay(char **tabuleiro,pjogadas pdados,int bytes_size,pcoordenadas pcoordenadas);
 
 void pedeJogada(char **tabuleiro,pjogadas pdados);
+
+void antesdeJogada(char** tabuleiro,pjogadas pdados);
 #endif
