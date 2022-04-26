@@ -1,43 +1,51 @@
 #include "header.h"
 #include "utils.h"
 
-bool checkWinner(pjogadas pdados){
-
+char checkWinner(pjogadas pdados){
+    int freeglobalspaces = 9;
     //Check linhas
     for(int i = 0;i <9;i+=3){
         if(pdados->winnerArray[i] == pdados->winnerArray[i+1] 
         && pdados->winnerArray[i] == pdados->winnerArray[i+2] 
-        && pdados->winnerArray[i] != '_')
-            return true;
+        && pdados->winnerArray[i] != '_' && pdados->winnerArray[i] != '!')
+            return pdados->winnerArray[i];
     }
 
     //Check colunas
     for(int i = 0;i <3;i++){
         if(pdados->winnerArray[i] == pdados->winnerArray[i+3] 
         && pdados->winnerArray[i] == pdados->winnerArray[i+6] 
-        && pdados->winnerArray[i] != '_')
-            return true;
+        && pdados->winnerArray[i] != '_' && pdados->winnerArray[i] != '!')
+            return pdados->winnerArray[i];
     }
     //Check diagonais
 
     if(pdados->winnerArray[0] == pdados->winnerArray[4] 
     && pdados->winnerArray[0] == pdados->winnerArray[8] 
-    && pdados->winnerArray[0] != '_')
-        return true;
+    && pdados->winnerArray[0] != '_' && pdados->winnerArray[0] != '!')
+        return pdados->winnerArray[0];
 
     if(pdados->winnerArray[2] == pdados->winnerArray[4] 
     && pdados->winnerArray[2] == pdados->winnerArray[6] 
-    && pdados->winnerArray[2] != '_')
-        return true;
+    && pdados->winnerArray[2] != '_' && pdados->winnerArray[2] != '!')
+        return pdados->winnerArray[2];
 
-    return false;
+    //Se todos do tabuleiros já estão preechidos
+    for(int i = 0;i <9;i++){
+        if(pdados->winnerArray[i] != '_')
+            freeglobalspaces--;      
+    }
+    if(freeglobalspaces == 0)
+        return '!';
+
+    //Senão continua o jogo
+    return '_';
 }
 
 char check_minitabuleiro(char** tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas){
     char peça,prox_peça;
     int x_global_atual;
     int y_global_atual;
-    bool jogador = checkTurnos(pdados);
 
     //Check linhas
 
@@ -74,7 +82,7 @@ char check_minitabuleiro(char** tabuleiro,pjogadas pdados,pcoordenadas pcoordena
     
     if (tabuleiro[x_global_atual][y_global_atual + 2] == tabuleiro[x_global_atual + 1][y_global_atual + 1] 
     && tabuleiro[x_global_atual][y_global_atual + 2] == tabuleiro[x_global_atual + 2][y_global_atual] 
-    && tabuleiro[x_global_atual][y_global_atual] != '_')
+    && tabuleiro[x_global_atual][y_global_atual + 2] != '_')
         return  tabuleiro[x_global_atual][y_global_atual + 2];
     
     int freespaces = checkFreeSpaces(tabuleiro,pcoordenadas);
@@ -102,7 +110,7 @@ int checkFreeSpaces(char** tabuleiro,pcoordenadas pcoordenadas){
 void arrayWinner(char**tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas){
     bool jogador = checkTurnos(pdados);
     char winner_quadro = check_minitabuleiro(tabuleiro,pdados,pcoordenadas);
-    //printf("\n|%c|\n",winner_quadro);
+    printf("\n|%c|\n",winner_quadro);
     if(winner_quadro == 'X' || winner_quadro == 'O'){
         if (jogador == true){
             printf("O Jogador 1 ganhou Quadro %d",pdados->mini_tabuleiro);

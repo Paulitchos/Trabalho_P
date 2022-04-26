@@ -29,7 +29,7 @@ void start_Game(){
     string = (char*)malloc(size);
     while(strcmp(string,"1\n") != 0 && strcmp(string,"2\n") !=0){
         if (first_interation == false){
-            printf("Tem que inserir pelo menos um numero: ");
+            printf("Tem que inserir pelo menos um numero:");
         }
         getline(&string, &size, stdin);
         

@@ -1,8 +1,9 @@
 #include "header.h"
 #include "utils.h"
 
-void playing_game(char **tabuleiro,pjogadas pdados){ 
-    while(checkWinner(pdados) == false){
+void playing_game(char **tabuleiro,pjogadas pdados){
+    char winner_char;
+    while((winner_char=checkWinner(pdados)) == '_'){
         bool jogador = checkTurnos(pdados);
         if (jogador == true){
             printf("\nJogador 1 a jogar || Simbolo X ||Turno:%d\n",pdados->turnos);       
@@ -16,12 +17,18 @@ void playing_game(char **tabuleiro,pjogadas pdados){
         pdados->turnos++;
     }
     bool winner = checkTurnos(pdados);
-    if (winner == true){
-        printf("\nJogador 1 a jogar || Simbolo X ||Turno:%d\n",pdados->turnos);       
+    if(winner_char != '!'){
+        if (winner == true){
+        printf("\nJogador 1 ganhou o jogo|| Simbolo X\n");       
+        }
+        else{
+        printf("\nJogador 2 ganhou o jogo || Simbolo O\n");
+        }
     }
     else{
-        printf("\nJogador 2 a jogar || Simbolo O || Turno:%d\n",pdados->turnos);
+        printf("\nO jogo foi empate\n");
     }
+    
 }
 
 bool checkTurnos(pjogadas pdados){

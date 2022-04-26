@@ -55,14 +55,12 @@ void regrasDoJogo();
 
 void setPos(char **p, int x, int y, char c);
 
-char getPos(char **p, int x, int y);
-
 void playing_game(char **tabuleiro,pjogadas pdados);
 
 //Diz qual o jogador a jogar
 bool checkTurnos(pjogadas pdados);
 
-bool checkWinner(pjogadas pdados);
+char checkWinner(pjogadas pdados);
 
 char check_minitabuleiro(char** tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas);
 

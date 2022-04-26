@@ -26,10 +26,6 @@ void setPos(char **p, int x, int y, char c){
     p[x][y] = c;
 }
 
-char getPos(char **p, int x, int y){
-    return p[x][y];
-}
-
 void nextquadro(pjogadas pdados){
     pdados->mini_tabuleiro = ((pdados->x- 1) * 3) + (pdados ->y - 1) + 1;
     //printf("|%c|",pdados->winnerArray[8]);
