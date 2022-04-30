@@ -55,7 +55,7 @@ void regrasDoJogo();
 
 void setPos(char **p, int x, int y, char c);
 
-void playing_game(char **tabuleiro,pjogadas pdados);
+void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista);
 
 //Diz qual o jogador a jogar
 bool checkTurnos(pjogadas pdados);
@@ -70,7 +70,17 @@ void arrayWinner(char**tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas);
 
 bool possiblePlay(char **tabuleiro,pjogadas pdados,int bytes_size,pcoordenadas pcoordenadas);
 
-void pedeJogada(char **tabuleiro,pjogadas pdados);
+pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista);
 
-void antesdeJogada(char** tabuleiro,pjogadas pdados);
+pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista);
+
+void preenche_lista(pjogadas p,pjogadas pdados);
+
+pjogadas insere_ord(pjogadas p,pjogadas pdados);
+
+void mostra_info(pjogadas p,pjogadas pdados,int postjogadas);
+
+int jogadas_anteriores(pjogadas pdados);
+
+void mostra_info_ex(pjogadas p);
 #endif

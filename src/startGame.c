@@ -4,6 +4,7 @@
 void start_Game(){
     jogadas dados;
     pjogadas pdados = &dados;
+    pjogadas lista = NULL;
     pdados->turnos = 1;
     size_t size = 2;
     char *string;
@@ -42,7 +43,7 @@ void start_Game(){
         printf("\nTabuleiro Inicial\n");
         printf("O jogo comeca no Mini-Tabuleiro %d\n\n",pdados->mini_tabuleiro);
         mostraMat(tabuleirojogo,9,9);
-        playing_game(tabuleirojogo,pdados);
+        playing_game(tabuleirojogo,pdados,lista);
     }
     else if(strcmp(string,"2\n") == 0){
         free(string);

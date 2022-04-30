@@ -1,7 +1,7 @@
 #include "header.h"
 #include "utils.h"
 
-void playing_game(char **tabuleiro,pjogadas pdados){
+void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista){
     char winner_char;
     while((winner_char=checkWinner(pdados)) == '_'){
         bool jogador = checkTurnos(pdados);
@@ -12,10 +12,10 @@ void playing_game(char **tabuleiro,pjogadas pdados){
             printf("\nJogador 2 a jogar || Simbolo O || Turno:%d\n",pdados->turnos);
         }
         printf("Mini_tabuleiro %d\n",pdados->mini_tabuleiro);
-        antesdeJogada(tabuleiro,pdados);
-        
+        lista = antesdeJogada(tabuleiro,pdados,lista);
         pdados->turnos++;
     }
+
     bool winner = checkTurnos(pdados);
     if(winner_char != '!'){
         if (winner == true){
@@ -37,7 +37,7 @@ bool checkTurnos(pjogadas pdados){
     return true;
 }
 
-void antesdeJogada(char** tabuleiro,pjogadas pdados){
+pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista){
     size_t size = 2;
     char *string;
     bool first_interation = true;
@@ -50,7 +50,7 @@ void antesdeJogada(char** tabuleiro,pjogadas pdados){
     string = (char*)malloc(size);
     while(strcmp(string,"1\n") != 0 && strcmp(string,"2\n") !=0){
         if (first_interation == false){
-            printf("Tem que inserir pelo menos um numero: ");
+            printf("Tem que inserir pelo menos um numero:");
         }
         getline(&string, &size, stdin);
         
@@ -59,18 +59,24 @@ void antesdeJogada(char** tabuleiro,pjogadas pdados){
     }
     if(strcmp(string,"1\n") == 0){
         free(string);
-        pedeJogada(tabuleiro,pdados);
-        
+        lista = pedeJogada(tabuleiro,pdados,lista);
     }
     else if(strcmp(string,"2\n") == 0){
         free(string);
+        int postjogadas = jogadas_anteriores(pdados);
+        if (postjogadas != 0){
+            mostra_info(lista,pdados,postjogadas);
+        }
+
+        lista = pedeJogada(tabuleiro,pdados,lista);    
     }
     else if(strcmp(string,"3\n") == 0){
         free(string);
     }
+    return lista;
 }
 
-void pedeJogada(char **tabuleiro,pjogadas pdados){
+pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista){
     coordenadas coordenadas;
     pcoordenadas pcoordenadas = &coordenadas;
     size_t size = 1;
@@ -86,7 +92,10 @@ void pedeJogada(char **tabuleiro,pjogadas pdados){
     };
     mostraMat(tabuleiro,9,9);
     arrayWinner(tabuleiro,pdados,pcoordenadas);
+    lista = insere_ord(lista,pdados);
+    //mostra_info_ex(lista);
     nextquadro(pdados);
+    return lista;
 }
 
 bool possiblePlay(char **tabuleiro,pjogadas pdados,int bytes_size,pcoordenadas pcoordenadas){ 
@@ -103,10 +112,40 @@ bool possiblePlay(char **tabuleiro,pjogadas pdados,int bytes_size,pcoordenadas p
         return false;
     if(pdados->y != 1 && pdados->y != 2 && pdados->y != 3)
         return false;
-    return converter_coordenadas(tabuleiro,pdados,pcoordenadas);
-    printf("|%d| |%d|",pdados->x,pdados->y);
+
+    //printf("|%d| |%d|",pdados->x,pdados->y);
+    return converter_coordenadas(tabuleiro,pdados,pcoordenadas);   
 }
 
+int jogadas_anteriores(pjogadas pdados){
+    size_t size = 2;
+    char *string;
+    bool first_interation = true;
+    bool possible = false;
+    int postjogadas = 0;
+    string = (char*)malloc(size);
+    if(pdados->turnos == 1){
+        printf("\nNão pode consultar jogadas no primeiro turno");
+        free(string);
+        return 0;
+    }
+    printf("Introduza k jogadas quer consultar:");
+    while(possible == false){
+        if (first_interation == false){
+            printf("Tem que inserir um numero(k minimo 1 || k maximo 10) e menor que numero de turnos:");
+        }
+        getline(&string, &size, stdin);
+        
+        postjogadas = atoi(string);
+
+        if(postjogadas < pdados->turnos && postjogadas > 0 && postjogadas < 10)
+            possible = true;
+
+        first_interation = false;
+    }
+    free(string);
+    return postjogadas;
+}
 
         
         
