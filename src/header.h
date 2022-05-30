@@ -83,4 +83,6 @@ void mostra_info(pjogadas p,pjogadas pdados,int postjogadas);
 int jogadas_anteriores(pjogadas pdados);
 
 void mostra_info_ex(pjogadas p);
+
+bool ficheiro_texto(pjogadas lista);
 #endif

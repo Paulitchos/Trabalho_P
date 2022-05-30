@@ -3,6 +3,7 @@
 
 void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista){
     char winner_char;
+    bool final;
     while((winner_char=checkWinner(pdados)) == '_'){
         bool jogador = checkTurnos(pdados);
         if (jogador == true){
@@ -19,16 +20,21 @@ void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista){
     bool winner = checkTurnos(pdados);
     if(winner_char != '!'){
         if (winner == true){
-        printf("\nJogador 1 ganhou o jogo|| Simbolo X\n");       
+            printf("\nJogador 2 ganhou o jogo|| Simbolo X\n");       
         }
         else{
-        printf("\nJogador 2 ganhou o jogo || Simbolo O\n");
+            printf("\nJogador 1 ganhou o jogo || Simbolo O\n");
         }
     }
     else{
         printf("\nO jogo foi empate\n");
     }
     
+    final = ficheiro_texto(lista);
+    if (final)
+        printf("\nIt worked");
+    else
+        printf("\nOh no :(");
 }
 
 bool checkTurnos(pjogadas pdados){
@@ -138,7 +144,7 @@ int jogadas_anteriores(pjogadas pdados){
         
         postjogadas = atoi(string);
 
-        if(postjogadas < pdados->turnos && postjogadas > 0 && postjogadas < 10)
+        if(postjogadas < pdados->turnos && postjogadas > 0 && postjogadas <= 10)
             possible = true;
 
         first_interation = false;

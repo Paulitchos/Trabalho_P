@@ -36,25 +36,31 @@ void preenche_lista(pjogadas p,pjogadas pdados){
     }
     p->prox = NULL;
 }
+
 void mostra_info_ex(pjogadas p){
     
     printf("\n");
     while(p != NULL){
-        printf("\nO jogador 2 efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d",p->x,p->y, p->mini_tabuleiro);
+        if(p->turnos % 2 == 0)      
+            printf("\nO jogador 2 efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d || turno %d",p->x,p->y, p->mini_tabuleiro,p->turnos);
+        else  
+            printf("\nO jogador 1 efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d || turno %d",p->x,p->y, p->mini_tabuleiro,p->turnos);
         p = p->prox;
     }
 }
+
 void mostra_info(pjogadas p,pjogadas pdados,int postjogadas){
-    printf("hello");
     int turno = pdados->turnos;
+    int posicaoList = 1;
+    printf("%d",turno);
     while(p != NULL){
-        for (int i = 1; i <  turno - postjogadas; i++){
-            p = p->prox;
+        if(posicaoList >= turno - postjogadas){
+            if(p->turnos % 2 == 0)      
+                printf("\nO jogador 2 efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d || turno %d",p->x,p->y, p->mini_tabuleiro,p->turnos);
+            else  
+                printf("\nO jogador 1 efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d || turno %d",p->x,p->y, p->mini_tabuleiro,p->turnos);
         }
-        if(p->turnos % 2 == 0)      
-            printf("\nO jogador 2 efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d",p->x,p->y, p->mini_tabuleiro);
-        else
-            printf("\nO jogador 1 efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d",p->x,p->y, p->mini_tabuleiro);
+        posicaoList++;
         p = p->prox;
     }
 }
