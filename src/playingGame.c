@@ -27,12 +27,20 @@ void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo){
 
     bool winner = checkTurnos(pdados);
     if(winner_char != '!'){
-        if (winner == true){
-            printf("\nJogador 2 ganhou o jogo|| Simbolo O\n");       
-        }
-        else{
-            printf("\nJogador 1 ganhou o jogo || Simbolo X\n");
-        }
+
+        if (winner != true || robo == 0){
+
+            if(winner)
+                printf("\nJogador 2 ganhou o jogo|| Simbolo O\n");
+            else
+                printf("\nJogador 1 ganhou o jogo || Simbolo X\n");
+
+        } else {
+
+            printf("\nO computador ganhou o jogo|| Simbolo O\n");
+            
+        }         
+        
     }
     else{
         printf("\nO jogo foi empate\n");
@@ -80,7 +88,7 @@ pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista,int robo)
             free(string);
             int postjogadas = jogadas_anteriores(pdados);
             if (postjogadas != 0){
-                mostra_info(lista,pdados,postjogadas);
+                mostra_info(lista,pdados,postjogadas,robo);
             }
 
             lista = pedeJogada(tabuleiro,pdados,lista,robo);    

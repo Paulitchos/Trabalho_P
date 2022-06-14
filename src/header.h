@@ -91,7 +91,7 @@ void preenche_lista(pjogadas p,pjogadas pdados);
 pjogadas insere_ord(pjogadas p,pjogadas pdados);
 
 //Mostrar informação da lista de acordo com as jogadas a consultar
-void mostra_info(pjogadas p,pjogadas pdados,int postjogadas);
+void mostra_info(pjogadas p,pjogadas pdados,int postjogadas,int robo);
 
 //Quantidade de jogadas anteriores à atual
 int jogadas_anteriores(pjogadas pdados);

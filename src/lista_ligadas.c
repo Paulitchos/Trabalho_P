@@ -49,16 +49,23 @@ void mostra_info_ex(pjogadas p){
     }
 }
 
-void mostra_info(pjogadas p,pjogadas pdados,int postjogadas){
+void mostra_info(pjogadas p,pjogadas pdados,int postjogadas,int robo){
     int turno = pdados->turnos;
     int posicaoList = 1;
     printf("%d",turno);
     while(p != NULL){
         if(posicaoList >= turno - postjogadas){
-            if(p->turnos % 2 == 0)      
-                printf("\nO jogador 2 efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d || turno %d",p->x,p->y, p->mini_tabuleiro,p->turnos);
-            else  
-                printf("\nO jogador 1 efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d || turno %d",p->x,p->y, p->mini_tabuleiro,p->turnos);
+            if(p->turnos % 2 != 0 || robo == 0) {
+
+                if(p->turnos % 2 == 0)
+                    printf("\nO jogador 2 efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d || turno %d",p->x,p->y, p->mini_tabuleiro,p->turnos);
+                else
+                    printf("\nO jogador 1 efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d || turno %d",p->x,p->y, p->mini_tabuleiro,p->turnos);
+                    
+            } else {
+                printf("\nO computador efetuou a jogada(x e y): %d %d no mini-tabuleiro: %d || turno %d",p->x,p->y, p->mini_tabuleiro,p->turnos);
+            }
+                
         }
         posicaoList++;
         p = p->prox;
