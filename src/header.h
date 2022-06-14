@@ -48,41 +48,60 @@ char** criaMatRegras(int nLin, int nCol);
 // Imprime o conteúdo de uma matriz dinâmica de caracteres
 void mostraMat(char **p, int nLin, int nCol);
 
+//Display do tabuleiro regras
 void setupTabuleiroRegras(char** p);
 
 //Mostra regas do jogo
 void regrasDoJogo();
 
+//Meter peça no tabuleiro
 void setPos(char **p, int x, int y, char c);
 
-void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista);
+//Começo do ciclo de jogo
+void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo);
+
+//Decidir que tipo de jogada quer
+pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista,int robo);
 
 //Diz qual o jogador a jogar
 bool checkTurnos(pjogadas pdados);
 
+//Verificar se o jogo acabou
 char checkWinner(pjogadas pdados);
 
+//Verificar se minitabuleiro tem vencedor
 char check_minitabuleiro(char** tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas);
 
+//Auxilio para check de empate
 int checkFreeSpaces(char** tabuleiro,pcoordenadas pcoordenadas);
 
+//Guarda no o array do vencedor o char na posiçao igual ao do minitabuleiro e com a char dele
 void arrayWinner(char**tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas);
 
+//Verificar se a jogada é possível na posição escolhida
 bool possiblePlay(char **tabuleiro,pjogadas pdados,int bytes_size,pcoordenadas pcoordenadas);
 
-pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista);
+//Pede a jogada ao jogador
+pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo);
 
-pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista);
-
+//Preencher a lista ligada
 void preenche_lista(pjogadas p,pjogadas pdados);
 
+//Construir a lista ordenadamente
 pjogadas insere_ord(pjogadas p,pjogadas pdados);
 
+//Mostrar informação da lista de acordo com as jogadas a consultar
 void mostra_info(pjogadas p,pjogadas pdados,int postjogadas);
 
+//Quantidade de jogadas anteriores à atual
 int jogadas_anteriores(pjogadas pdados);
 
+//Mostrar lista ligada por completo
 void mostra_info_ex(pjogadas p);
 
+//Exportação do ficheiro de texto se for com sucesso
 bool ficheiro_texto(pjogadas lista);
+
+//Exportação do ficheiro binário
+void pause(pjogadas lista);
 #endif

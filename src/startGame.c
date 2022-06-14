@@ -11,6 +11,7 @@ void start_Game(){
     char **tabuleirojogo;
     bool first_interation = true;
     char pos;
+    int robo = 0;
     for (int i = 0; i < 9; i++){
         pdados->winnerArray[i] = '_';
         //printf("!%c!",pdados->winnerArray[i]);
@@ -43,10 +44,16 @@ void start_Game(){
         printf("\nTabuleiro Inicial\n");
         printf("O jogo comeca no Mini-Tabuleiro %d\n\n",pdados->mini_tabuleiro);
         mostraMat(tabuleirojogo,9,9);
-        playing_game(tabuleirojogo,pdados,lista);
+        playing_game(tabuleirojogo,pdados,lista,robo);
     }
     else if(strcmp(string,"2\n") == 0){
         free(string);
+        robo = 1;
+        tabuleirojogo = criaMat(9,9);
+        printf("\nTabuleiro Inicial\n");
+        printf("O jogo comeca no Mini-Tabuleiro %d\n\n",pdados->mini_tabuleiro);
+        mostraMat(tabuleirojogo,9,9);
+        playing_game(tabuleirojogo,pdados,lista,robo);
     }
     
 }

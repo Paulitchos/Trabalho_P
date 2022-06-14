@@ -16,7 +16,7 @@ pjogadas insere_ord(pjogadas p,pjogadas pdados){
        p = novo;
     }
     else{
-        printf("\n|test|\n");
+        //printf("\n|test|\n");
         aux = p;
         while(aux->prox != NULL)
             aux = aux->prox;

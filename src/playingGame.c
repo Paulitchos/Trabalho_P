@@ -1,29 +1,37 @@
 #include "header.h"
 #include "utils.h"
 
-void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista){
+void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo){
     char winner_char;
     bool final;
     while((winner_char=checkWinner(pdados)) == '_'){
         bool jogador = checkTurnos(pdados);
-        if (jogador == true){
-            printf("\nJogador 1 a jogar || Simbolo X ||Turno:%d\n",pdados->turnos);       
+
+        if (robo == 0 || jogador == true){
+            if (jogador == true)
+                printf("\nJogador 1 a jogar || Simbolo X ||Turno:%d\n",pdados->turnos);
+            
+            else
+                printf("\nJogador 2 a jogar || Simbolo O || Turno:%d\n",pdados->turnos);
+            
+        } else{
+
+            printf("\nComputador a jogar || Simbolo O || Turno:%d\n",pdados->turnos);
+          
         }
-        else{
-            printf("\nJogador 2 a jogar || Simbolo O || Turno:%d\n",pdados->turnos);
-        }
+
         printf("Mini_tabuleiro %d\n",pdados->mini_tabuleiro);
-        lista = antesdeJogada(tabuleiro,pdados,lista);
+        lista = antesdeJogada(tabuleiro,pdados,lista,robo);
         pdados->turnos++;
     }
 
     bool winner = checkTurnos(pdados);
     if(winner_char != '!'){
         if (winner == true){
-            printf("\nJogador 2 ganhou o jogo|| Simbolo X\n");       
+            printf("\nJogador 2 ganhou o jogo|| Simbolo O\n");       
         }
         else{
-            printf("\nJogador 1 ganhou o jogo || Simbolo O\n");
+            printf("\nJogador 1 ganhou o jogo || Simbolo X\n");
         }
     }
     else{
@@ -32,9 +40,9 @@ void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista){
     
     final = ficheiro_texto(lista);
     if (final)
-        printf("\nIt worked");
+        printf("\nExportou o ficheiro de texto com sucesso");
     else
-        printf("\nOh no :(");
+        printf("\nOcorreu erro a exportar o ficheiro :(");
 }
 
 bool checkTurnos(pjogadas pdados){
@@ -43,59 +51,78 @@ bool checkTurnos(pjogadas pdados){
     return true;
 }
 
-pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista){
+pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista,int robo){
     size_t size = 2;
     char *string;
     bool first_interation = true;
+    bool jogador = checkTurnos(pdados);
 
-    printf("1- Fazer Jogada\n"); 
-    printf("2- Rever K jogadas anteriores(K < 10)\n");
-    printf("3- Sair do Jogo\n"); 
+    if (robo == 0 || jogador == true){
+        printf("1- Fazer Jogada\n"); 
+        printf("2- Rever K jogadas anteriores(K < 10)\n");
+        printf("3- Sair do Jogo\n"); 
 
-    printf("Introduza o numero da opcao:");
-    string = (char*)malloc(size);
-    while(strcmp(string,"1\n") != 0 && strcmp(string,"2\n") !=0){
-        if (first_interation == false){
-            printf("Tem que inserir pelo menos um numero:");
-        }
+        printf("Introduza o numero da opcao:");
+        string = (char*)malloc(size);
+        while(strcmp(string,"1\n") != 0 && strcmp(string,"2\n") !=0 && strcmp(string,"3\n") !=0){
+            if (first_interation == false){
+                printf("Tem que inserir pelo menos um numero:");
+            }   
         getline(&string, &size, stdin);
-        
         first_interation = false;
         
-    }
-    if(strcmp(string,"1\n") == 0){
-        free(string);
-        lista = pedeJogada(tabuleiro,pdados,lista);
-    }
-    else if(strcmp(string,"2\n") == 0){
-        free(string);
-        int postjogadas = jogadas_anteriores(pdados);
-        if (postjogadas != 0){
-            mostra_info(lista,pdados,postjogadas);
         }
+        if(strcmp(string,"1\n") == 0){
+            free(string);
+            lista = pedeJogada(tabuleiro,pdados,lista,robo);
+        }
+        else if(strcmp(string,"2\n") == 0){
+            free(string);
+            int postjogadas = jogadas_anteriores(pdados);
+            if (postjogadas != 0){
+                mostra_info(lista,pdados,postjogadas);
+            }
 
-        lista = pedeJogada(tabuleiro,pdados,lista);    
+            lista = pedeJogada(tabuleiro,pdados,lista,robo);    
+        }
+        else if(strcmp(string,"3\n") == 0){
+            free(string);
+            pause(lista);
+            libertaMat(tabuleiro,9);
+        }
+    } else{
+      lista = pedeJogada(tabuleiro,pdados,lista,robo);
     }
-    else if(strcmp(string,"3\n") == 0){
-        free(string);
-    }
+    
     return lista;
 }
 
-pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista){
+pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo){
     coordenadas coordenadas;
     pcoordenadas pcoordenadas = &coordenadas;
     size_t size = 1;
-    pdados->input_jogadas = (char*)malloc(size);
-    int bytes_size = 0;
+    bool jogador = checkTurnos(pdados);
+    bool good_robo_play = false;
 
-    printf("\nIntroduza linha e coluna (ex:1 1,2 3):");
-    bytes_size = getline(&pdados->input_jogadas, &size, stdin);
-    while (possiblePlay(tabuleiro,pdados,bytes_size,pcoordenadas) == false){
-        printf("Introduza novamente uma linha e coluna (ex:1 1,2 3):");
+    if (robo == 0 || jogador == true){
+        pdados->input_jogadas = (char*)malloc(size);
+        int bytes_size = 0;
+
+        printf("\nIntroduza linha e coluna (ex:1 1,2 3):");
         bytes_size = getline(&pdados->input_jogadas, &size, stdin);
-        //printf("%s",pdados->input_jogadas);
-    };
+        while (possiblePlay(tabuleiro,pdados,bytes_size,pcoordenadas) == false){
+            printf("Introduza novamente uma linha e coluna (ex:1 1,2 3):");
+            bytes_size = getline(&pdados->input_jogadas, &size, stdin);
+            //printf("%s",pdados->input_jogadas);
+        }; 
+    } else{
+        while (good_robo_play == false){
+            pdados->x = intUniformRnd(1,3);
+            pdados->y = intUniformRnd(1,3);
+            good_robo_play = converter_coordenadas(tabuleiro,pdados,pcoordenadas);
+        }
+    }
+    
     mostraMat(tabuleiro,9,9);
     arrayWinner(tabuleiro,pdados,pcoordenadas);
     lista = insere_ord(lista,pdados);
