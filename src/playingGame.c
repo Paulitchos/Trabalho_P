@@ -2,9 +2,30 @@
 #include "utils.h"
 
 void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo){
+    coordenadas coordenadas;
+    pcoordenadas pcoordenadas = &coordenadas;
+
+    for (int i = 0; i < 9; i++){
+        pcoordenadas->winnerArray[i] = '_';
+        //printf("!%c!",pdados->winnerArray[i]);
+    }
+    pcoordenadas->winnerArray[9] ='\0';
+
     char winner_char;
     bool final;
-    while((winner_char=checkWinner(pdados)) == '_'){
+
+    bool bin = verificarbin();
+    
+    if (bin){
+        bool decisao = querContinuar();
+
+        if (decisao){
+            lista = recuperarJogo(lista,pdados,tabuleiro,pcoordenadas);
+        }
+   
+    }
+
+    while((winner_char=checkWinner(pcoordenadas)) == '_'){
         bool jogador = checkTurnos(pdados);
 
         if (robo == 0 || jogador == true){
@@ -21,7 +42,7 @@ void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo){
         }
 
         printf("Mini_tabuleiro %d\n",pdados->mini_tabuleiro);
-        lista = antesdeJogada(tabuleiro,pdados,lista,robo);
+        lista = antesdeJogada(tabuleiro,pdados,lista,robo,pcoordenadas);
         pdados->turnos++;
     }
 
@@ -59,7 +80,7 @@ bool checkTurnos(pjogadas pdados){
     return true;
 }
 
-pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista,int robo){
+pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista,int robo,pcoordenadas pcoordenadas){
     size_t size = 2;
     char *string;
     bool first_interation = true;
@@ -82,7 +103,7 @@ pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista,int robo)
         }
         if(strcmp(string,"1\n") == 0){
             free(string);
-            lista = pedeJogada(tabuleiro,pdados,lista,robo);
+            lista = pedeJogada(tabuleiro,pdados,lista,robo,pcoordenadas);
         }
         else if(strcmp(string,"2\n") == 0){
             free(string);
@@ -91,23 +112,23 @@ pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista,int robo)
                 mostra_info(lista,pdados,postjogadas,robo);
             }
 
-            lista = pedeJogada(tabuleiro,pdados,lista,robo);    
+            lista = pedeJogada(tabuleiro,pdados,lista,robo,pcoordenadas);    
         }
         else if(strcmp(string,"3\n") == 0){
             free(string);
-            pause(lista);
+            pause(lista,pdados);
             libertaMat(tabuleiro,9);
+            exit(EXIT_SUCCESS);
         }
+
     } else{
-      lista = pedeJogada(tabuleiro,pdados,lista,robo);
+      lista = pedeJogada(tabuleiro,pdados,lista,robo,pcoordenadas);
     }
     
     return lista;
 }
 
-pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo){
-    coordenadas coordenadas;
-    pcoordenadas pcoordenadas = &coordenadas;
+pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo,pcoordenadas pcoordenadas){
     size_t size = 1;
     bool jogador = checkTurnos(pdados);
     bool good_robo_play = false;
@@ -135,7 +156,7 @@ pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo){
     arrayWinner(tabuleiro,pdados,pcoordenadas);
     lista = insere_ord(lista,pdados);
     //mostra_info_ex(lista);
-    nextquadro(pdados);
+    nextquadro(pdados,pcoordenadas);
     return lista;
 }
 

@@ -15,7 +15,7 @@ struct dados_jogada
     char *input_jogadas;
     int x;
     int y;
-    char winnerArray[10];
+    
     pjogadas prox;
 };
 
@@ -24,6 +24,7 @@ typedef struct todascoordenadas
     int n_mini_converted;
     int x_mini_tabuleiro;
     int y_mini_tabuleiro;
+    char winnerArray[10];
 
 }coordenadas,*pcoordenadas;
 
@@ -35,7 +36,7 @@ void start_Game();
 bool converter_coordenadas(char** tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas);
 
 //Decide o próximo mini tabuleiro a jogar
-void nextquadro(pjogadas pdados);
+void nextquadro(pjogadas pdados,pcoordenadas pcoordenadas);
 
 // Liberta uma matriz dinâmica de caracteres com nLin linhas
 void libertaMat(char** p, int nLin);
@@ -61,13 +62,13 @@ void setPos(char **p, int x, int y, char c);
 void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo);
 
 //Decidir que tipo de jogada quer
-pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista,int robo);
+pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista,int robo,pcoordenadas pcoordenadas);
 
 //Diz qual o jogador a jogar
 bool checkTurnos(pjogadas pdados);
 
 //Verificar se o jogo acabou
-char checkWinner(pjogadas pdados);
+char checkWinner(pcoordenadas pcoordenadas);
 
 //Verificar se minitabuleiro tem vencedor
 char check_minitabuleiro(char** tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas);
@@ -82,7 +83,7 @@ void arrayWinner(char**tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas);
 bool possiblePlay(char **tabuleiro,pjogadas pdados,int bytes_size,pcoordenadas pcoordenadas);
 
 //Pede a jogada ao jogador
-pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo);
+pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo,pcoordenadas pcoordenadas);
 
 //Preencher a lista ligada
 void preenche_lista(pjogadas p,pjogadas pdados);
@@ -103,5 +104,12 @@ void mostra_info_ex(pjogadas p);
 bool ficheiro_texto(pjogadas lista);
 
 //Exportação do ficheiro binário
-void pause(pjogadas lista);
+void pause(pjogadas lista,pjogadas pdados);
+
+//Verificar se existe binário
+bool verificarbin();
+
+pjogadas recuperarJogo(pjogadas lista,pjogadas pdados,char **tabuleiro,pcoordenadas pcoordenadas);
+
+bool querContinuar();
 #endif

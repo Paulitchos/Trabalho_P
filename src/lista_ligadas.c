@@ -31,9 +31,6 @@ void preenche_lista(pjogadas p,pjogadas pdados){
     p->mini_tabuleiro = pdados->mini_tabuleiro;
     p->x = pdados->x;
     p->y = pdados->y;
-    for (int i = 0; i < 9; i++){
-        p->winnerArray[i] = pdados->winnerArray[i];
-    }
     p->prox = NULL;
 }
 

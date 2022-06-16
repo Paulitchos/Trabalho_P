@@ -12,12 +12,6 @@ void start_Game(){
     bool first_interation = true;
     char pos;
     int robo = 0;
-    for (int i = 0; i < 9; i++){
-        pdados->winnerArray[i] = '_';
-        //printf("!%c!",pdados->winnerArray[i]);
-    }
-    pdados->winnerArray[9] ='\0';
-    //printf("|%lu|",sizeof(pdados->winnerArray));
     
     pdados->mini_tabuleiro = intUniformRnd(1,9);
     

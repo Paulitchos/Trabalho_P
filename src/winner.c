@@ -1,38 +1,38 @@
 #include "header.h"
 #include "utils.h"
 
-char checkWinner(pjogadas pdados){
-    int freeglobalspaces = 9;
+char checkWinner(pcoordenadas pcoordenadas){
+    int freeglobalspaces = 8;
     //Check linhas
     for(int i = 0;i <9;i+=3){
-        if(pdados->winnerArray[i] == pdados->winnerArray[i+1] 
-        && pdados->winnerArray[i] == pdados->winnerArray[i+2] 
-        && pdados->winnerArray[i] != '_' && pdados->winnerArray[i] != '!')
-            return pdados->winnerArray[i];
+        if(pcoordenadas->winnerArray[i] == pcoordenadas->winnerArray[i+1] 
+        && pcoordenadas->winnerArray[i] == pcoordenadas->winnerArray[i+2] 
+        && pcoordenadas->winnerArray[i] != '_' && pcoordenadas->winnerArray[i] != '!')
+            return pcoordenadas->winnerArray[i];
     }
 
     //Check colunas
     for(int i = 0;i <3;i++){
-        if(pdados->winnerArray[i] == pdados->winnerArray[i+3] 
-        && pdados->winnerArray[i] == pdados->winnerArray[i+6] 
-        && pdados->winnerArray[i] != '_' && pdados->winnerArray[i] != '!')
-            return pdados->winnerArray[i];
+        if(pcoordenadas->winnerArray[i] == pcoordenadas->winnerArray[i+3] 
+        && pcoordenadas->winnerArray[i] == pcoordenadas->winnerArray[i+6] 
+        && pcoordenadas->winnerArray[i] != '_' && pcoordenadas->winnerArray[i] != '!')
+            return pcoordenadas->winnerArray[i];
     }
     //Check diagonais
 
-    if(pdados->winnerArray[0] == pdados->winnerArray[4] 
-    && pdados->winnerArray[0] == pdados->winnerArray[8] 
-    && pdados->winnerArray[0] != '_' && pdados->winnerArray[0] != '!')
-        return pdados->winnerArray[0];
+    if(pcoordenadas->winnerArray[0] == pcoordenadas->winnerArray[4] 
+    && pcoordenadas->winnerArray[0] == pcoordenadas->winnerArray[8] 
+    && pcoordenadas->winnerArray[0] != '_' && pcoordenadas->winnerArray[0] != '!')
+        return pcoordenadas->winnerArray[0];
 
-    if(pdados->winnerArray[2] == pdados->winnerArray[4] 
-    && pdados->winnerArray[2] == pdados->winnerArray[6] 
-    && pdados->winnerArray[2] != '_' && pdados->winnerArray[2] != '!')
-        return pdados->winnerArray[2];
+    if(pcoordenadas->winnerArray[2] == pcoordenadas->winnerArray[4] 
+    && pcoordenadas->winnerArray[2] == pcoordenadas->winnerArray[6] 
+    && pcoordenadas->winnerArray[2] != '_' && pcoordenadas->winnerArray[2] != '!')
+        return pcoordenadas->winnerArray[2];
 
     //Se todos do tabuleiros já estão preechidos
     for(int i = 0;i <9;i++){
-        if(pdados->winnerArray[i] != '_')
+        if(pcoordenadas->winnerArray[i] != '_')
             freeglobalspaces--;      
     }
     if(freeglobalspaces == 0)
@@ -114,15 +114,15 @@ void arrayWinner(char**tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas){
     if(winner_quadro == 'X' || winner_quadro == 'O'){
         if (jogador == true){
             printf("O Jogador 1 ganhou Quadro %d",pdados->mini_tabuleiro);
-            pdados->winnerArray[pcoordenadas->n_mini_converted] = winner_quadro;
+            pcoordenadas->winnerArray[pcoordenadas->n_mini_converted] = winner_quadro;
         }
         else{
             printf("O Jogador 2 ganhou Quadro %d",pdados->mini_tabuleiro);
-            pdados->winnerArray[pcoordenadas->n_mini_converted] = winner_quadro;
+            pcoordenadas->winnerArray[pcoordenadas->n_mini_converted] = winner_quadro;
         }
     }else if(winner_quadro == '!'){
         printf("Empate no Quadro %d",pdados->mini_tabuleiro);
-        pdados->winnerArray[pcoordenadas->n_mini_converted] = winner_quadro;
+        pcoordenadas->winnerArray[pcoordenadas->n_mini_converted] = winner_quadro;
     }
 }
 
