@@ -156,12 +156,13 @@ pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo,pco
             good_robo_play = converter_coordenadas(tabuleiro,pdados,pcoordenadas);
         }
     }
-    free(pdados->input_jogadas);
+    
     mostraMat(tabuleiro,9,9);
     arrayWinner(tabuleiro,pdados,pcoordenadas);
     lista = insere_ord(lista,pdados);
     //mostra_info_ex(lista);
     nextquadro(pdados,pcoordenadas);
+    
     return lista;
 }
 
