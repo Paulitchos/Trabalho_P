@@ -110,7 +110,7 @@ int checkFreeSpaces(char** tabuleiro,pcoordenadas pcoordenadas){
 void arrayWinner(char**tabuleiro,pjogadas pdados,pcoordenadas pcoordenadas){
     bool jogador = checkTurnos(pdados);
     char winner_quadro = check_minitabuleiro(tabuleiro,pdados,pcoordenadas);
-    printf("\n|%c|\n",winner_quadro);
+    //printf("\n|%c|\n",winner_quadro);
     if(winner_quadro == 'X' || winner_quadro == 'O'){
         if (jogador == true){
             printf("O Jogador 1 ganhou Quadro %d",pdados->mini_tabuleiro);

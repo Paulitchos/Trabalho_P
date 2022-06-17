@@ -7,6 +7,7 @@ void pause(pjogadas lista,pjogadas pdados){
     int maxturno = pdados->turnos - 1;
     printf("Escrever estado do jogo para jogo.bin...");
     fp = fopen("jogo.bin","wb");
+    
     if (fp == NULL) {
         fclose(fp);
     }
@@ -14,11 +15,11 @@ void pause(pjogadas lista,pjogadas pdados){
     if (lista==NULL){
         i=0;
         fwrite(&i,sizeof(int),1,fp); //To indicate that there is no data to read
-        printf("Sem dados para gravar, abort\n");
+        printf(" Sem dados para gravar\n");
     } else {
         //printf("Entrou");
-        //i=1;
-        //fwrite(&i,sizeof(int),1,fp); //To indicate that there is data to read
+        i=1;
+        fwrite(&i,sizeof(int),1,fp); //To indicate that there is data to read
         fwrite(&maxturno,sizeof(int),1,fp);
         
         while (lista !=NULL){

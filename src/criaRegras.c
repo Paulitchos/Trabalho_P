@@ -20,11 +20,12 @@ char** criaMatRegras(int nLin, int nCol){
     return p;
 }
 
-void regrasDoJogo(char** p){
+void regrasDoJogo(){
     char **regrasjogo;
     printf("\nNumeros dos Mini-Tabuleiros do Ultimate Tic-Tac-Toe\n");
     regrasjogo = criaMatRegras(9,9);
     setupTabuleiroRegras(regrasjogo);
+    libertaMat(regrasjogo,9);
     putchar('\n');
     putchar('\n');
 }

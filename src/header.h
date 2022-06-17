@@ -21,10 +21,10 @@ struct dados_jogada
 
 typedef struct todascoordenadas
 {
-    int n_mini_converted;
-    int x_mini_tabuleiro;
-    int y_mini_tabuleiro;
-    char winnerArray[10];
+    int n_mini_converted; //minitabuleiro convertido para 0 a 8
+    int x_mini_tabuleiro; //pegar no x da jogada e convertê-la para tabueleiro global
+    int y_mini_tabuleiro; //pegar no y da jogada e convertê-la para tabueleiro global
+    char winnerArray[10]; //array que guarda os minitabuleiros ganhos ou empatados
 
 }coordenadas,*pcoordenadas;
 
@@ -109,7 +109,12 @@ void pause(pjogadas lista,pjogadas pdados);
 //Verificar se existe binário
 bool verificarbin();
 
+//Reconstrói a lista do jogo anterior através do ficheiro binário
 pjogadas recuperarJogo(pjogadas lista,pjogadas pdados,char **tabuleiro,pcoordenadas pcoordenadas);
 
+//Pergunta se quer continuar o jogo anterior
 bool querContinuar();
+
+//Liberta a memória ocupada pela lista
+void elimina_lista(pjogadas lista);
 #endif

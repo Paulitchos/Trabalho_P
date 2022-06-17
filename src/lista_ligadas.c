@@ -49,7 +49,7 @@ void mostra_info_ex(pjogadas p){
 void mostra_info(pjogadas p,pjogadas pdados,int postjogadas,int robo){
     int turno = pdados->turnos;
     int posicaoList = 1;
-    printf("%d",turno);
+    //printf("%d",turno);
     while(p != NULL){
         if(posicaoList >= turno - postjogadas){
             if(p->turnos % 2 != 0 || robo == 0) {
@@ -66,5 +66,15 @@ void mostra_info(pjogadas p,pjogadas pdados,int postjogadas,int robo){
         }
         posicaoList++;
         p = p->prox;
+    }
+}
+
+void elimina_lista(pjogadas lista){
+    pjogadas aux;
+
+    while(lista!= NULL){
+        aux = lista;
+        lista = lista->prox; //avançar com o p para o nó seguinte
+        free(aux);
     }
 }

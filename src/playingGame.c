@@ -21,6 +21,8 @@ void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo){
 
         if (decisao){
             lista = recuperarJogo(lista,pdados,tabuleiro,pcoordenadas);
+            printf("\nTabuleiro de Jogo Recuperado\n");
+            mostraMat(tabuleiro,9,9);
         }
    
     }
@@ -68,6 +70,8 @@ void playing_game(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo){
     }
     
     final = ficheiro_texto(lista);
+    libertaMat(tabuleiro,9);
+    elimina_lista(lista);
     if (final)
         printf("\nExportou o ficheiro de texto com sucesso");
     else
@@ -118,6 +122,7 @@ pjogadas antesdeJogada(char** tabuleiro,pjogadas pdados,pjogadas lista,int robo,
             free(string);
             pause(lista,pdados);
             libertaMat(tabuleiro,9);
+            elimina_lista(lista);
             exit(EXIT_SUCCESS);
         }
 
@@ -151,7 +156,7 @@ pjogadas pedeJogada(char **tabuleiro,pjogadas pdados,pjogadas lista,int robo,pco
             good_robo_play = converter_coordenadas(tabuleiro,pdados,pcoordenadas);
         }
     }
-    
+    free(pdados->input_jogadas);
     mostraMat(tabuleiro,9,9);
     arrayWinner(tabuleiro,pdados,pcoordenadas);
     lista = insere_ord(lista,pdados);
@@ -179,35 +184,6 @@ bool possiblePlay(char **tabuleiro,pjogadas pdados,int bytes_size,pcoordenadas p
     return converter_coordenadas(tabuleiro,pdados,pcoordenadas);   
 }
 
-int jogadas_anteriores(pjogadas pdados){
-    size_t size = 2;
-    char *string;
-    bool first_interation = true;
-    bool possible = false;
-    int postjogadas = 0;
-    string = (char*)malloc(size);
-    if(pdados->turnos == 1){
-        printf("\nNão pode consultar jogadas no primeiro turno");
-        free(string);
-        return 0;
-    }
-    printf("Introduza k jogadas quer consultar:");
-    while(possible == false){
-        if (first_interation == false){
-            printf("Tem que inserir um numero(k minimo 1 || k maximo 10) e menor que numero de turnos:");
-        }
-        getline(&string, &size, stdin);
-        
-        postjogadas = atoi(string);
-
-        if(postjogadas < pdados->turnos && postjogadas > 0 && postjogadas <= 10)
-            possible = true;
-
-        first_interation = false;
-    }
-    free(string);
-    return postjogadas;
-}
 
         
         

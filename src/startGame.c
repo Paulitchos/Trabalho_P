@@ -17,6 +17,7 @@ void start_Game(){
     
     
     regrasDoJogo();
+    tabuleirojogo = criaMat(9,9);
 
     printf("1- Jogar contra outro jogador\n");
     printf("2- Jogar contra o computador\n"); 
@@ -34,7 +35,6 @@ void start_Game(){
     }
     if(strcmp(string,"1\n") == 0){
         free(string);
-        tabuleirojogo = criaMat(9,9);
         printf("\nTabuleiro Inicial\n");
         printf("O jogo comeca no Mini-Tabuleiro %d\n\n",pdados->mini_tabuleiro);
         mostraMat(tabuleirojogo,9,9);
@@ -43,7 +43,6 @@ void start_Game(){
     else if(strcmp(string,"2\n") == 0){
         free(string);
         robo = 1;
-        tabuleirojogo = criaMat(9,9);
         printf("\nTabuleiro Inicial\n");
         printf("O jogo comeca no Mini-Tabuleiro %d\n\n",pdados->mini_tabuleiro);
         mostraMat(tabuleirojogo,9,9);
